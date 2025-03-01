@@ -26,7 +26,7 @@ WHERE ro.cancellation IS NULL;
 
 2. What if there was an additional $1 charge for any pizza extras?
 
-- Add cheese is $1 extra
+1. Add cheese is $1 extra
 
 SELECT  SUM(CASE WHEN pn.pizza_name = 'Meatlovers' THEN 12
 
@@ -48,7 +48,7 @@ END)
 
 +
 
-(CASE  WHEN co.extras ILIKE '%4%' THEN 1  -- Assuming topping_id 4 = Cheese
+(CASE  WHEN co.extras ILIKE '%4%' THEN 1
 
 ELSE 0
 
@@ -66,7 +66,7 @@ WHERE ro.cancellation IS NULL;
 
 ![](/images/6wV_Image_3.png)
 
-- The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner. How would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.
+3. The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner. How would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.
 
 CREATE TABLE runner_ratings (
 
@@ -102,10 +102,10 @@ VALUES
 
 (10, 104, 1, 3);
 
-- Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?
+4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?
 
-- 
-- ```
+4. 
+2. ```
 customer_id
 order_id
 runner_id
@@ -236,7 +236,7 @@ ORDER BY order_id;
 
 ![](/images/uBO_Image_4.png)
 
-- If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
+5. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
 WITH pizza_prices AS (
 
