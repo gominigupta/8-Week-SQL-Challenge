@@ -24,9 +24,7 @@ WHERE ro.cancellation IS NULL;
 
 ![](/images/5mh_Image_2.png)
 
-2. What if there was an additional $1 charge for any pizza extras?
-
-1. Add cheese is $1 extra
+2. What if there was an additional $1 charge for any pizza extras? (Add cheese is $1 extra)
 
 SELECT  SUM(CASE WHEN pn.pizza_name = 'Meatlovers' THEN 12
 
@@ -36,7 +34,7 @@ ELSE 0
 
 END
 
-+
+<Plus Sign>
 
 (CASE WHEN co.extras IS NOT NULL AND co.extras <> 'null' AND co.extras <> ''
 
@@ -46,7 +44,7 @@ ELSE 0
 
 END)
 
-+
+<Plus Sign>
 
 (CASE  WHEN co.extras ILIKE '%4%' THEN 1
 
@@ -104,19 +102,8 @@ VALUES
 
 4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?
 
-4. 
-2. ```
-customer_id
-order_id
-runner_id
-rating
-order_time
-pickup_time
-Time btwn order & pickup
-Delivery duration
-Average speed
-Total #of pizzas
-```
+![](/images/uEn_Image_4.png)
+
 WITH delivered_orders AS ( SELECT co.customer_id, co.order_id, ro.runner_id,
 
 rr.rating, co.order_time, ro.pickup_time::timestamp AS pickup_time,
@@ -139,16 +126,23 @@ GROUP BY  co.customer_id, co.order_id, ro.runner_id, rr.rating, co.order_time, r
 
 )
 
-SELECT  customer_id, order_id, runner_id,  \
-COALESCE(CAST(rating AS TEXT), 'No Rating') AS rating,  \
-order_time, pickup_time,  \
-ROUND((EXTRACT(EPOCH FROM time_to_pickup) / 60)::numeric, 2) AS minutes_to_pickup, \
-ROUND(CASE WHEN duration ~ '^\d+$' THEN duration::numeric \
-WHEN duration ~ '(\d+)' THEN substring(duration FROM '(\d+)')::numeric \
-ELSE NULL \
+SELECT  customer_id, order_id, runner_id,
+
+COALESCE(CAST(rating AS TEXT), 'No Rating') AS rating,
+
+order_time, pickup_time,
+
+ROUND((EXTRACT(EPOCH FROM time_to_pickup) / 60)::numeric, 2) AS
+
+Minutes_to_pickup,
+
+ROUND(CASE WHEN duration ~ '^\d+$' THEN duration::numeric
+
+WHEN duration ~ '(\d+)' THEN substring(duration FROM '(\d+)')::numeric
+
+ELSE NULL
+
 END, 2) AS delivery_duration_minutes, \
- \
- \
  \
 ROUND(
 
@@ -236,7 +230,7 @@ ORDER BY order_id;
 
 ![](/images/uBO_Image_4.png)
 
-5. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
+1. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
 WITH pizza_prices AS (
 
@@ -301,7 +295,5 @@ ROUND(SUM(pp.total_revenue) - (SUM(dc.total_distance_km) * 0.30), 2) AS profit
 FROM pizza_prices pp
 
 JOIN delivery_costs dc
-
-ON pp.order_id = dc.order_id;
 
 ![](/images/gRs_Image_5.png)
