@@ -1,4 +1,4 @@
-**Case Study 3: Foodie-Fi**
+**Case Study 4: Data Bank**
 
 ![](/images/Xja_Image_1.png)
 
